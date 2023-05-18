@@ -1,0 +1,5 @@
+/bin
+*.db
+*debug_bin
+.env
+*.so
