@@ -41,6 +41,12 @@ func main() {
 	flag.StringVar(&cfg.DatabasePath, "db", cfg.DatabasePath, "path to db file (will be created)")
 	flag.StringVar(&cfg.PluginPath, "plugin", cfg.PluginPath, "botrunner plugin path (can be comma seperated for multiple, or directory for all)")
 	flag.Parse()
+	if cfg.BotToken == "" {
+		cfg.BotToken = getTokenFromEnvFile([]string{".env", os.ExpandEnv("$HOME/.env"), os.Getenv("ENV_FILE")}, "TOKEN")
+	}
+	if cfg.BotToken == "" {
+		log.Println("need bot token from @botfather")
+	}
 	db, bot, _, err := initialize(cfg)
 	if err != nil {
 		log.Fatalln("fatal init:", err)

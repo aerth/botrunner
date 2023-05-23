@@ -42,6 +42,9 @@ func loadPlugins(bot *tgbot.Bot, db *bbolt.DB, paths string) ([]botrunner.Plugin
 		plugins = make([]botrunner.Plugin, len(pluginPaths))
 	)
 
+	if len(pluginPaths) == 0 || pluginPaths[0] == "" {
+		log.Fatal("need at least one plugin")
+	}
 	for i, pluginPath := range pluginPaths {
 		pluginPath = os.ExpandEnv(pluginPath)
 		p, err := plugin.Open(pluginPath)
